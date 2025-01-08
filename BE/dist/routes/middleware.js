@@ -8,6 +8,11 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = require("../config");
 const middleware = (req, res, next) => {
     const token = req.headers["authorization"];
+    if (!token) {
+        res.status(411).send({
+            msg: "token is not present!!"
+        });
+    }
     const decodecToken = jsonwebtoken_1.default.verify(token, config_1.JWT_PASSWORD);
     if (decodecToken) {
         // here typescript give you error, right now we are avoiding this, eventually we'll fixed it
@@ -18,7 +23,7 @@ const middleware = (req, res, next) => {
     }
     else {
         res.status(411).send({
-            msg: "token is not presnt in headers"
+            msg: "invalid token"
         });
     }
 };

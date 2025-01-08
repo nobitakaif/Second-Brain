@@ -121,4 +121,27 @@ Router.get('/content', middleware_1.middleware, function (req, res) {
         });
     });
 });
+Router.delete('/content', middleware_1.middleware, function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const contentId = req.body.contentId;
+        try {
+            yield db_1.ContentModel.deleteMany({
+                contentId,
+                // @ts-ignore
+                userId: req.userId
+            });
+        }
+        catch (e) {
+            console.log(e);
+            res.status(500).send({
+                msg: "content not deleted"
+            });
+            return;
+        }
+        res.status(200).send({
+            msg: "content is deleted",
+            id: contentId
+        });
+    });
+});
 exports.credentialRoutes = Router;

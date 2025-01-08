@@ -121,11 +121,11 @@ Router.get('/content', middleware, async function(req,res){
 })
 
 Router.delete('/content',middleware,async function(req,res){
-    const _id = req.body.contentId
+    const contentId = req.body.contentId
     
     try{
         await ContentModel.deleteMany({
-            _id,
+            contentId,
             // @ts-ignore
             userId:req.userId
         })
@@ -138,7 +138,7 @@ Router.delete('/content',middleware,async function(req,res){
     }
     res.status(200).send({
         msg:"content is deleted",
-        id:_id
+        id:contentId
     })
 
 })
